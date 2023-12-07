@@ -1,0 +1,15 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "PavelRakhaev <rakhaevpavel@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node": "^21.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
