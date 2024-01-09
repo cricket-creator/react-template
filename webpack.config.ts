@@ -3,37 +3,62 @@ import webpack from "webpack";
 import "webpack-dev-server";
 
 import HTMLWebpackPlugin from "html-webpack-plugin";
+import TerserWebpackPlugin from "terser-webpack-plugin";
 
-export default (...args: unknown[]): webpack.Configuration => {
-  console.log("args", args);
+import { EnvMode } from "./constants";
+
+export default ({}, { mode }: { mode: EnvMode }): webpack.Configuration => {
   return {
-    entry: path.join(__dirname, "src", "index.tsx"),
+    entry: {
+      main: path.join(__dirname, "src", "index.tsx"),
+    },
     output: {
       path: path.join(__dirname, "dist"),
-      filename: "bundle.js",
+      filename: "[name].[contenthash].js",
       clean: true,
     },
-    devtool: "inline-source-map",
-    devServer: {
-      static: {
-        directory: path.join(__dirname, "public"),
-      },
-      compress: true,
-      port: 3000,
-      historyApiFallback: true,
-      hot: true,
-      onListening: (devServer) => {
-        if (!devServer) {
-          throw new Error("webpack-dev-server is not defined");
-        }
-
-        const address = devServer.server?.address();
-        if (address && typeof address !== "string") {
-          console.log(`Listening on port: ${address.port}`);
-        }
-      },
-      open: true,
+    performance: {
+      hints: false,
     },
+    optimization: {
+      ...(mode === EnvMode.PRODUCTION && {
+        minimize: mode === EnvMode.PRODUCTION,
+        minimizer: [
+          new TerserWebpackPlugin({
+            terserOptions: {
+              compress: true,
+            },
+            extractComments: true,
+          }),
+        ],
+      }),
+      splitChunks: {
+        chunks: "all",
+      },
+    },
+    devtool: mode === EnvMode.PRODUCTION ? false : "inline-source-map",
+    ...(mode === EnvMode.DEVELOPMENT && {
+      devServer: {
+        static: {
+          directory: path.join(__dirname, "public"),
+        },
+        compress: true,
+        port: 3000,
+        historyApiFallback: true,
+        hot: true,
+        onListening: (devServer) => {
+          if (!devServer) {
+            throw new Error("webpack-dev-server is not defined");
+          }
+
+          const address = devServer.server?.address();
+          if (address && typeof address !== "string") {
+            console.log(`Listening on port: ${address.port}`);
+          }
+        },
+        open: true,
+      },
+    }),
     module: {
       rules: [
         {
@@ -76,6 +101,8 @@ export default (...args: unknown[]): webpack.Configuration => {
         components: path.resolve(__dirname, "src", "components"),
         contexts: path.resolve(__dirname, "src", "contexts"),
         hooks: path.resolve(__dirname, "src", "hooks"),
+        providers: path.resolve(__dirname, "src", "providers"),
+        pages: path.resolve(__dirname, "src", "pages"),
       },
     },
     plugins: [

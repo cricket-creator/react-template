@@ -1,31 +1,32 @@
 {
   "compilerOptions": {
-    "target": "ES5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
-    "jsx": "preserve" /* Specify what JSX code is generated. */,
-    "module": "ESNext" /* Specify what module code is generated. */, // "rootDir": "./",                                  /* Specify the root folder within your source files. */
-    "moduleResolution": "node10" /* Specify how TypeScript looks up a file from a given module specifier. */,
-    "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
-    "sourceMap": true /* Create source map files for emitted JavaScript files. */,
-    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
-    "allowSyntheticDefaultImports": true /* Allow 'import x from y' when a module doesn't have a default export. */,
-    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
-    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
-    "strict": true /* Enable all strict type-checking options. */,
-    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
-    "useUnknownInCatchVariables": true /* Default catch clause variables as 'unknown' instead of 'any'. */,
-    "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
-    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
-    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
-    "noUncheckedIndexedAccess": true /* Add 'undefined' to a type when accessed using an index. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "target": "ES5",
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "node10",
+    "baseUrl": "./src",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
     "paths": {
       "components/*": ["components/*"],
       "contexts/*": ["contexts/*"],
-      "hooks/*": ["hooks/*"]
+      "hooks/*": ["hooks/*"],
+      "providers/*": ["providers/*"],
+      "pages/*": ["pages/*"]
     }
   },
-  "include": ["./webpack.config.ts", "./src"],
+  "include": ["./webpack.config.ts", "./src", "constants.ts"],
   "files": ["global.d.ts"],
   "ts-node": {
     "compilerOptions": {

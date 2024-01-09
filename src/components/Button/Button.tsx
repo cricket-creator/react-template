@@ -1,19 +1,13 @@
 import { ButtonHTMLAttributes, forwardRef } from "react";
-import cn from "classnames";
-import styles from "./Button.module.scss";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isBlue?: boolean;
-}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, isBlue, ...props }, ref) => {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ type = "button", children, className, ...props }, ref) => {
     return (
-      <button ref={ref} className={cn(isBlue && styles.blueButton)} {...props}>
+      <button ref={ref} type={type} {...props}>
         {children}
       </button>
     );
-  },
+  }
 );
-
-export default Button;

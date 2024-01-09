@@ -5,12 +5,14 @@
   "license": "MIT",
   "scripts": {
     "prettier": "prettier --write --cache --cache-strategy metadata",
-    "dev": "webpack serve --mode=development"
+    "dev": "webpack serve --mode=development",
+    "webpack": "webpack --mode=production"
   },
   "dependencies": {
     "classnames": "^2.3.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
@@ -31,6 +33,7 @@
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.9",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.3",

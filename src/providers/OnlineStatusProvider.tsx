@@ -1,17 +1,16 @@
 import {
+  FC,
   PropsWithChildren,
-  createContext,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
+import { onlineStatusContext } from "contexts";
 
-export const onlineContext = createContext(false);
+const { Provider } = onlineStatusContext;
 
-const { Provider } = onlineContext;
-
-export const OnlineProvider = ({ children }: PropsWithChildren) => {
+export const OnlineStatusProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   const handleOnline = useCallback(() => setIsOnline(true), []);
