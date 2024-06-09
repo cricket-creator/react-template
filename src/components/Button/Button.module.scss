@@ -1,0 +1,18 @@
+@mixin buttonStyles($bgColor: transparent) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: $bgColor;
+  outline: none;
+  border: none;
+}
+
+.buttonWithoutChildren {
+  @include buttonStyles(red);
+}
+
+.buttonWithChildren {
+  @include buttonStyles(green);
+}

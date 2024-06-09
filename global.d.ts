@@ -1,16 +1,16 @@
 declare module "*.module.css" {
   const classes: readonly { [key: string]: string };
-  export default classes as const;
+  export default classes;
 }
 
 declare module "*.module.scss" {
   const classes: readonly { [key: string]: string };
-  export default classNames as const;
+  export default classes;
 }
 
 declare module "*.module.sass" {
   const classes: readonly { [key: string]: string };
-  export default classNames as const;
+  export default classes;
 }
 
 declare const APPLICATION: string;

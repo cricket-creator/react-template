@@ -24,10 +24,15 @@
       "hooks/*": ["hooks/*"],
       "providers/*": ["providers/*"],
       "pages/*": ["pages/*"]
-    }
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["./webpack.config.ts", "./src", "constants.ts"],
-  "files": ["global.d.ts"],
+  "include": [
+    "./webpack.config.ts",
+    "./src",
+    "./constants.ts",
+    "./global.d.ts"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

@@ -1,11 +1,20 @@
 import { ButtonHTMLAttributes, forwardRef } from "react";
+import cn from "classnames";
+import styles from "./Button.module.scss";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ type = "button", children, className, ...props }, ref) => {
+  ({ type = "button", children, ...props }, ref) => {
     return (
-      <button ref={ref} type={type} {...props}>
+      <button
+        ref={ref}
+        type={type}
+        className={cn(
+          children ? styles.buttonWithChildren : styles.buttonWithoutChildren
+        )}
+        {...props}
+      >
         {children}
       </button>
     );
