@@ -1,26 +1,27 @@
 import { FC, PropsWithChildren } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { buildMenu } from "router";
+import type { MenuItem } from "router";
+import styles from "./Layout.module.scss";
 
-type LayoutProps = PropsWithChildren<{
-  menu: ReturnType<typeof buildMenu>;
+type Props = PropsWithChildren<{
+  menu: MenuItem[];
 }>;
 
-const Layout: FC<LayoutProps> = ({ menu }) => {
+export const Layout: FC<Props> = ({ menu }) => {
   return (
     <>
       <nav>
-        <ul>
-          {menu.map((item) => (
-            <li key={item.name}>
-              <Link to={item.path}>{item.name}</Link>
-            </li>
-          ))}
+        <ul className={styles.list}>
+          {menu.map((item) => {
+            return (
+              <li key={item.name}>
+                <Link to={item.path}>{item.name}</Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
       <Outlet />
     </>
   );
 };
-
-export default Layout;

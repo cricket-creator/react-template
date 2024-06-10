@@ -7,7 +7,10 @@ import TerserWebpackPlugin from "terser-webpack-plugin";
 
 import { EnvMode } from "./constants";
 
-export default ({}, { mode }: { mode: EnvMode }): webpack.Configuration => {
+export default (
+  _cfg: object,
+  { mode }: { mode: EnvMode }
+): webpack.Configuration => {
   return {
     entry: {
       main: path.join(__dirname, "src", "index.tsx"),
@@ -53,6 +56,7 @@ export default ({}, { mode }: { mode: EnvMode }): webpack.Configuration => {
 
           const address = devServer.server?.address();
           if (address && typeof address !== "string") {
+            // eslint-disable-next-line no-console
             console.log(`Listening on port: ${address.port}`);
           }
         },

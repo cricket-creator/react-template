@@ -1,9 +1,9 @@
-import Layout from "components/Layout/Layout";
-import { HomePage, AboutPage, NotFoundPage } from "pages";
+import { Layout } from "components";
+import { LazyHomePage, LazyAboutPage, LazyNotFoundPage } from "pages";
 import { Suspense } from "react";
 import { Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
 
-type MenuItem = {
+export type MenuItem = {
   name: string;
   path: string;
 };
@@ -14,21 +14,16 @@ type RouteObjectWithMenu = Omit<RouteObject, "children"> & {
 };
 
 const ROUTES: RouteObjectWithMenu[] = [
-  { menu: { name: "Home" }, path: "/", element: <HomePage /> },
-  { menu: { name: "About" }, path: "/about", element: <AboutPage /> },
-  { path: "*", element: <NotFoundPage /> },
+  { menu: { name: "Home" }, path: "/", element: <LazyHomePage /> },
+  { menu: { name: "About" }, path: "/about", element: <LazyAboutPage /> },
+  { path: "*", element: <LazyNotFoundPage /> },
 ];
 
 export const buildMenu = (routes: RouteObjectWithMenu[]) => {
   return routes.reduce((acc, route) => {
-    if (route.path && route.menu) {
-      return [
-        ...acc,
-        {
-          name: route.menu.name,
-          path: route.path,
-        },
-      ];
+    const { path, menu } = route;
+    if (path && menu) {
+      return [...acc, { name: menu.name, path }];
     }
     return acc;
   }, [] as MenuItem[]);

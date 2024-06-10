@@ -13,8 +13,12 @@ const { Provider } = onlineStatusContext;
 export const OnlineStatusProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-  const handleOnline = useCallback(() => setIsOnline(true), []);
-  const handleOffline = useCallback(() => setIsOnline(false), []);
+  const handleOnline = useCallback(() => {
+    setIsOnline(true);
+  }, []);
+  const handleOffline = useCallback(() => {
+    setIsOnline(false);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("online", handleOnline);
@@ -26,7 +30,9 @@ export const OnlineStatusProvider: FC<PropsWithChildren> = ({ children }) => {
     };
   }, []);
 
-  const value = useMemo(() => isOnline, [isOnline]);
+  const value = useMemo(() => {
+    return isOnline;
+  }, [isOnline]);
 
   return <Provider value={value}>{children}</Provider>;
 };

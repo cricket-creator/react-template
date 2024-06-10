@@ -5,7 +5,7 @@ import styles from "./Button.module.scss";
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ type = "button", children, ...props }, ref) => {
+  ({ type = "button", children, onClick, ...props }, ref) => {
     return (
       <button
         ref={ref}
@@ -13,6 +13,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           children ? styles.buttonWithChildren : styles.buttonWithoutChildren
         )}
+        onClick={onClick}
         {...props}
       >
         {children}
@@ -20,3 +21,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
+
+Button.displayName = "Button";

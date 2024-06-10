@@ -1,4 +1,6 @@
 import { onlineStatusContext } from "contexts/onlineStatusContext";
 import { useContext } from "react";
 
-export const useOnlineStatus = () => useContext(onlineStatusContext);
+export const useOnlineStatus = () => {
+  return useContext(onlineStatusContext);
+};

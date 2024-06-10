@@ -8,10 +8,7 @@ export type UseClickOutSide = <T extends HTMLElement = HTMLElement>({
   handler: (event: MouseEvent) => void;
 }) => void;
 
-export const useClickOutside: UseClickOutSide = ({
-  refs,
-  handler: handler,
-}) => {
+export const useClickOutside: UseClickOutSide = ({ refs, handler }) => {
   useEffect(() => {
     const listener = (event: MouseEvent) => {
       refs.some((ref) => {

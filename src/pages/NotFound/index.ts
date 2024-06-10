@@ -1,5 +1,5 @@
 import { lazy } from "react";
 
-export default lazy(
-  () => import(/* webpackChunkName: "Not-found" */ "./NotFoundPage")
-);
+export const LazyNotFoundPage = lazy(() => {
+  return import(/* webpackChunkName: "Not-found-page" */ "./NotFoundPage");
+});

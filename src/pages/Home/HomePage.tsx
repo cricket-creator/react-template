@@ -5,7 +5,9 @@ const HomePage: FC = () => {
   const [text, setText] = useState<string>();
 
   const changeText = () => {
-    setText((prev) => (prev ? undefined : "Click me"));
+    setText((prev) => {
+      return prev ? undefined : "Click me";
+    });
   };
 
   return (
