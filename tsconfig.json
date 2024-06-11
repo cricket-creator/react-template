@@ -23,8 +23,10 @@
       "contexts/*": ["contexts/*"],
       "hooks/*": ["hooks/*"],
       "providers/*": ["providers/*"],
-      "pages/*": ["pages/*"]
-    }
+      "pages/*": ["pages/*"],
+      "styles/*": ["styles/*"]
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "files": ["webpack.config.ts", "constants.ts", "global.d.ts"],
   "include": ["src/**/*"],

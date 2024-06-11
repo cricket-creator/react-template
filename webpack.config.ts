@@ -1,22 +1,31 @@
 import path from "path";
-import webpack from "webpack";
+import webpack, { LoaderContext } from "webpack";
 import "webpack-dev-server";
 
 import HTMLWebpackPlugin from "html-webpack-plugin";
 import TerserWebpackPlugin from "terser-webpack-plugin";
 
-import { EnvMode } from "./constants";
+import {
+  EnvMode,
+  OUTPUT_PATH,
+  PUBLIC_PATH,
+  SHARED_STYLES,
+  SRC_PATH,
+} from "./constants";
 
 export default (
   _cfg: object,
   { mode }: { mode: EnvMode }
 ): webpack.Configuration => {
+  const isProduction = mode === EnvMode.PRODUCTION;
+  const isDevelopment = mode === EnvMode.DEVELOPMENT;
+
   return {
     entry: {
-      main: path.join(__dirname, "src", "index.tsx"),
+      main: path.join(SRC_PATH, "index.tsx"),
     },
     output: {
-      path: path.join(__dirname, "dist"),
+      path: OUTPUT_PATH,
       filename: "[name].[contenthash].js",
       clean: true,
     },
@@ -24,8 +33,8 @@ export default (
       hints: false,
     },
     optimization: {
-      ...(mode === EnvMode.PRODUCTION && {
-        minimize: mode === EnvMode.PRODUCTION,
+      ...(isProduction && {
+        minimize: isProduction,
         minimizer: [
           new TerserWebpackPlugin({
             terserOptions: {
@@ -39,11 +48,11 @@ export default (
         chunks: "all",
       },
     },
-    devtool: mode === EnvMode.PRODUCTION ? false : "inline-source-map",
-    ...(mode === EnvMode.DEVELOPMENT && {
+    devtool: isProduction ? false : "inline-source-map",
+    ...(isDevelopment && {
       devServer: {
         static: {
-          directory: path.join(__dirname, "public"),
+          directory: PUBLIC_PATH,
         },
         compress: true,
         port: 3000,
@@ -74,7 +83,7 @@ export default (
               "@babel/preset-typescript",
             ],
           },
-          include: path.resolve(__dirname, "src"),
+          include: SRC_PATH,
           test: /\.(js|ts)x?$/i,
           exclude: /node_modules/,
         },
@@ -95,18 +104,52 @@ export default (
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ["style-loader", "css-loader", "sass-loader"],
+          use: [
+            "style-loader",
+            "css-loader",
+            {
+              loader: "sass-loader",
+              options: {
+                additionalData: (
+                  content: string,
+                  context: LoaderContext<unknown>
+                ) => {
+                  const { resourcePath, rootContext } = context;
+                  const relativePath = path.relative(rootContext, resourcePath);
+                  if (!relativePath.startsWith("src/components")) {
+                    return content;
+                  }
+                  const imports = SHARED_STYLES.reduce((acc: string, style) => {
+                    const url = path.join(SRC_PATH, "styles", style);
+                    return `${acc}\n@import "${url}";`;
+                  }, "");
+                  return `${imports}\n${content}`;
+                },
+              },
+            },
+          ],
+          exclude: /node_modules/,
         },
       ],
     },
     resolve: {
-      extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+      extensions: [
+        ".tsx",
+        ".ts",
+        ".jsx",
+        ".js",
+        ".json",
+        ".css",
+        ".sass",
+        ".scss",
+      ],
       alias: {
-        components: path.resolve(__dirname, "src", "components"),
-        contexts: path.resolve(__dirname, "src", "contexts"),
-        hooks: path.resolve(__dirname, "src", "hooks"),
-        providers: path.resolve(__dirname, "src", "providers"),
-        pages: path.resolve(__dirname, "src", "pages"),
+        components: path.resolve(SRC_PATH, "components"),
+        contexts: path.resolve(SRC_PATH, "contexts"),
+        hooks: path.resolve(SRC_PATH, "hooks"),
+        providers: path.resolve(SRC_PATH, "providers"),
+        pages: path.resolve(SRC_PATH, "pages"),
+        styles: path.resolve(SRC_PATH, "styles"),
       },
     },
     plugins: [
@@ -117,7 +160,7 @@ export default (
         React: "react",
       }),
       new HTMLWebpackPlugin({
-        template: path.join(__dirname, "public", "index.html"),
+        template: path.join(PUBLIC_PATH, "index.html"),
         minify: true,
       }),
     ],

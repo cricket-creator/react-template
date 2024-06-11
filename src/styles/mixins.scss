@@ -1,0 +1,5 @@
+@mixin flexWithBGColor($bgColor: transparent)  {
+  display: flex;
+  background-color: $bgColor;
+  @content;
+}

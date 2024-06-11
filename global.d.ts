@@ -1,15 +1,15 @@
-declare module "*.module.css" {
-  const styles: { [className: string]: string };
+declare module "*.css" {
+  const styles: readonly { [className: string]: string };
   export default styles;
 }
 
-declare module "*.module.scss" {
-  const styles: { [className: string]: string };
+declare module "*.scss" {
+  const styles: readonly { [className: string]: string };
   export default styles;
 }
 
-declare module "*.module.sass" {
-  const styles: { [className: string]: string };
+declare module "*.sass" {
+  const styles: readonly { [className: string]: string };
   export default styles;
 }
 

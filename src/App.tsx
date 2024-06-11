@@ -1,6 +1,7 @@
 import { RouterProvider } from "react-router-dom";
+import { OnlineStatusProvider } from "providers";
 import { browserRouter } from "./router";
-import { OnlineStatusProvider } from "./providers";
+import "styles/reset.scss";
 
 const App = () => {
   return (
